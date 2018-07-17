@@ -6,12 +6,9 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 
-import java.io.File;
 import java.io.StringWriter;
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONObject;
@@ -20,7 +17,6 @@ public class POSTMovies {
 	
 	private static String ENDPOINT_POST_Movies = "https://splunk.mocklab.io/movies";
 	private Response response;
-	private ValidatableResponse json;
 	private RequestSpecification httpRequest ;
 	private Scenario scenario;
 	
@@ -45,7 +41,7 @@ public class POSTMovies {
 	    requestParams.writeJSONString(out);
 	      
 	    String jsonText = out.toString();
-	    System.out.print(jsonText);
+	    //System.out.print(jsonText);
 	    httpRequest.body(requestParams.toJSONString());
 	}
 
@@ -59,7 +55,7 @@ public class POSTMovies {
 	@Then("^returned response code from POST request is (\\d+)$")
 	public void returned_response_code_from_POST_request_is(int statusCode) throws Throwable {
 		int statuscode=response.getStatusCode();
-    	System.out.println(statuscode);
+    	//System.out.println(statuscode);
     	scenario.write("Status code returned is : "+statuscode);
     	response.then().statusCode(statusCode);	
 	}
@@ -67,7 +63,7 @@ public class POSTMovies {
 	@Then("^validate the respons body$")
 	public void validate_the_respons_body() throws Throwable {
 	   String body=response.getBody().asString();
-	   System.out.println(body);
+	   //System.out.println(body);
 	   scenario.write(body);
 	}
 

@@ -20,6 +20,20 @@ Feature: Testing POST requests and response for /movies API endpoint
       |        400 | application/json                  |       123 | ['hfgfh','jghgj']        |
 
   @APITesting
+  Scenario Outline: Validate GET request on movie added successfully
+    Given the header Accepts Content type "<CONTENT_TYPE>"
+    And Movies and its information exists with a queried movie name "<movie name query>"
+    When user sends a get entire movies list request to the server
+    Then returned response code is <statuscode>
+    And the Content type is "<CONTENT_TYPE_RETURNED>"
+    And verfy the number of records returned are "<movieslistsize>"
+
+    Examples: 
+      | movie name query | statuscode | CONTENT_TYPE     | movieslistsize | CONTENT_TYPE_RETURNED |
+      #correct data
+      | superman         |        200 | application/json |              1 | application/json      |
+
+  @APITesting
   Scenario Outline: User submits binary file in the request
     Given the header Content type format is "<CONTENT_TYPE>"
     And user adds binary file
@@ -28,8 +42,8 @@ Feature: Testing POST requests and response for /movies API endpoint
     And validate the respons body
 
     Examples: 
-      | statuscode | CONTENT_TYPE     |
-      |        500 |  multipart/mixed |
+      | statuscode | CONTENT_TYPE    |
+      |        500 | multipart/mixed |
 
   @APITesting
   Scenario Outline: User submits multipart form data in the request

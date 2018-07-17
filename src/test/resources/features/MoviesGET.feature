@@ -11,6 +11,7 @@ Feature: Testing GET requests and response for /movies API endpoint
 
     Examples: 
       | statuscode | CONTENT_TYPE     | CONTENT_TYPE_RETURNED |
+      #/movies end point does not exist
       |        404 | application/json | text/plain            |
 
   @APITesting
@@ -24,8 +25,11 @@ Feature: Testing GET requests and response for /movies API endpoint
 
     Examples: 
       | movie name query | statuscode | CONTENT_TYPE     | movieslistsize | CONTENT_TYPE_RETURNED |
+      #correct data
       | batman           |        200 | application/json |             16 | application/json      |
+      #movie name does not exist in catalog
       | DDLJ             |        404 | application/json |              0 | text/plain            |
+      #movie name uses invalid characters
       | A%$@             |        400 | application/json |                | text/plain            |
       
   @APITesting
@@ -39,7 +43,9 @@ Feature: Testing GET requests and response for /movies API endpoint
 
     Examples: 
       | movie name query | count | statuscode | CONTENT_TYPE     | CONTENT_TYPE_RETURNED |
+      #count=2
       | batman           |     2 |        200 | application/json | application/json      |
+      #count=0
       | batman           |     0 |        200 | application/json | application/json      |
 
   @APITesting
@@ -53,6 +59,7 @@ Feature: Testing GET requests and response for /movies API endpoint
 
     Examples: 
       | movie name query | CONTENT_TYPE     | statuscode | CONTENT_TYPE_RETURNED |
+      #SPL-003
       | batman           | application/json |        200 | application/json      |
 
   @APITesting
@@ -66,6 +73,7 @@ Feature: Testing GET requests and response for /movies API endpoint
 
     Examples: 
       | movie name query | CONTENT_TYPE     | statuscode | CONTENT_TYPE_RETURNED |
+      #SPL-004
       | batman           | application/json |        200 | application/json      |
 
   @APITesting
@@ -79,6 +87,7 @@ Feature: Testing GET requests and response for /movies API endpoint
 
     Examples: 
       | movie name query | CONTENT_TYPE     | statuscode | CONTENT_TYPE_RETURNED |
+      #SPL-005
       | batman           | application/json |        200 | application/json      |
 
   @APITesting
@@ -92,6 +101,7 @@ Feature: Testing GET requests and response for /movies API endpoint
 
     Examples: 
       | movie name query | CONTENT_TYPE     | statuscode | CONTENT_TYPE_RETURNED |
+      #SPL-006
       | batman           | application/json |        200 | application/json      |
 
   @APITesting
@@ -105,6 +115,7 @@ Feature: Testing GET requests and response for /movies API endpoint
 
     Examples: 
       | movie name query | CONTENT_TYPE     | statuscode | CONTENT_TYPE_RETURNED |
+      #SPL-003
       | batman           | application/json |        200 | application/json      |
 
   @APITesting
@@ -118,5 +129,6 @@ Feature: Testing GET requests and response for /movies API endpoint
 
     Examples: 
       | movie name query | CONTENT_TYPE     | statuscode | CONTENT_TYPE_RETURNED |
+      #SPL-002
       | batman           | application/json |        200 | application/json      |
   
