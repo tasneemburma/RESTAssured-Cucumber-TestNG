@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Set;
 
 import cucumber.api.Scenario;
-import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 
 import HelperServices.GETMoviesApiHelper;
@@ -27,7 +26,6 @@ public class GETMovies {
 		
 		private static String ENDPOINT_GET_Movies = "https://splunk.mocklab.io/movies";
 		private Response response;
-		private ValidatableResponse json;
 		private RequestSpecification httpRequest ;
 		public static JsonPath jsonPathEvaluator;
 		private static int sizeoflist=-1;
@@ -44,10 +42,7 @@ public class GETMovies {
 		@Given("^the header Accepts Content type \"([^\"]*)\"$")
 		public void the_header_Accepts_Content_type(String contenttypeaccepted) throws Throwable {
 		   
-			//Response response=httpRequest.accept("application/json").get(ENDPOINT_GET_Movies);
-			//int statuscode=response.getStatusCode();
-			//System.out.println(statuscode);
-			//scenario.write(""+statuscode);
+			
 			httpRequest= RestAssured.given().header("Accept",contenttypeaccepted);
 			
 		}
@@ -57,11 +52,12 @@ public class GETMovies {
 		    
 			response=httpRequest.when().get(ENDPOINT_GET_Movies);
 		}
+		
 		@Then("^returned response code is (\\d+)$")
 		public void returned_response_code_is(int statusCode) throws Throwable {
 		   
 			int statuscode=response.getStatusCode();
-	    	System.out.println(statuscode);
+	    	//System.out.println(statuscode);
 	    	scenario.write("Status code returned is : "+statuscode);
 	    	response.then().statusCode(statusCode);
 	    	
@@ -81,7 +77,7 @@ public class GETMovies {
 		@Then("^verfy the number of records returned are \"([^\"]*)\"$")
 		public void verfy_the_number_of_records_returned_are(String moviessizelist) throws Throwable {
 			sizeoflist=response.then().extract().path("results.size()");
-			System.out.println("Real size of list"+ sizeoflist);
+			//System.out.println("Real size of list"+ sizeoflist);
 			scenario.write("Real size of list"+ sizeoflist);
 			if(sizeoflist>-1) {
 				scenario.write("The size of the movies list is "+moviessizelist);
@@ -95,7 +91,7 @@ public class GETMovies {
 		
 		@Given("^Movies and its information exists with a queried movie name \"([^\"]*)\" and limit the records count to (\\d+)$")
 		public void movies_and_its_information_exists_with_a_queried_movie_name_and_limit_the_records_count_to(String moviename, int count) throws Throwable {
-		    // Write code here that turns the phrase above into concrete actions
+		    
 			httpRequest.param("q", moviename).param("count", count);
 			countval=count;
 		}
@@ -107,9 +103,9 @@ public class GETMovies {
 			   jsonPathEvaluator = response.jsonPath();
 			   int size=jsonPathEvaluator.getInt("results.size()");
 			   Boolean res=GETMoviesApiHelper.iscountcorrect(size,countval,sizeoflist);
-			   scenario.write("size got :"+size);
-			   scenario.write("count provided :"+countval);
-			   scenario.write("is real size saved :"+sizeoflist);
+			   //scenario.write("size got :"+size);
+			   //scenario.write("count provided :"+countval);
+			   //scenario.write("is real size saved :"+sizeoflist);
 			   if(!res) {
 				   scenario.write("Movie records returned does not match the count query value passed");
 			   }
@@ -145,9 +141,9 @@ public class GETMovies {
 			List<List<Integer>> list_genre_ids = jsonPathEvaluator.get("results.genre_ids");
 			int actualcountofmovies=GETMoviesApiHelper.countofmovies(list_genre_ids);
 			Boolean iscorrectcount=GETMoviesApiHelper.verifyiscountmovies(actualcountofmovies);
-			System.out.println(iscorrectcount);
+			//System.out.println(iscorrectcount);
 			
-			System.out.println("Actual Count of movies"+actualcountofmovies);
+			//System.out.println("Actual Count of movies"+actualcountofmovies);
 			scenario.write("Actual Count of movies is : "+actualcountofmovies);
 			
 			assertTrue(iscorrectcount);

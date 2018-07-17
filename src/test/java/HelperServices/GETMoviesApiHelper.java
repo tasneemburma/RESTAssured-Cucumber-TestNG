@@ -9,6 +9,7 @@ import java.util.Set;
 
 public class GETMoviesApiHelper
 {
+	//verify  the count query passed matched thes records returned
 	public static boolean iscountcorrect(int sizeofrecordsreturned,int count, int sizeoflist) {
 		
 		if(count>0 && count<sizeoflist && sizeofrecordsreturned==count) {
@@ -22,6 +23,7 @@ public class GETMoviesApiHelper
 		}
 	}
 	
+	//verify duplicate poster path links
 	public static  boolean checkDuplicateUsingSet(List<String> listofposerpaths){
         Set<String> inputSet = new HashSet<String>(listofposerpaths);
         if(inputSet.size()< listofposerpaths.size()) {
@@ -30,6 +32,7 @@ public class GETMoviesApiHelper
         return true;
     }
 	
+	//get the duplicate poster path url list
 	public static  Set<String> duplicateslist(List<String> listofposerpaths){
 	 List<String> inputSet = new ArrayList<String>();
      Set<String> setToReturn = new HashSet<String>(); 
@@ -48,11 +51,12 @@ public class GETMoviesApiHelper
      
 	}
 	
+	//get the count of movies having genreids sum>400
 	public static int countofmovies(List<List<Integer>> list_genre_ids) {
 		int countofmovies=0;
 		for (List<Integer> elementlist : list_genre_ids) {
 			if( elementlist != null && !elementlist.isEmpty()) {
-				System.out.println(sumofgenre_ids(elementlist));
+				//System.out.println(sumofgenre_ids(elementlist));
 				if(sumofgenre_ids(elementlist)>400) {
 					countofmovies+=1;
 				}
@@ -61,6 +65,7 @@ public class GETMoviesApiHelper
 		return countofmovies;
 	}
 	
+	//verify the count of movies having sum of genre ids>400 are 7 or less than it
 	public static boolean verifyiscountmovies(Integer countofmovies) {
 		if (countofmovies>7){
 			return false;
@@ -71,6 +76,7 @@ public class GETMoviesApiHelper
 			
 	}
 	
+	//verify number of movie shaving palindrome word in its title
 	public static boolean verifypalindromemoviescount(List<String> list_title) {
 		
 		for (String titleofmovie : list_title) { 
@@ -81,6 +87,7 @@ public class GETMoviesApiHelper
 		return false;
 	}
 	
+	//verify number of movies having title of another movies in its title name
 	public static boolean verifycontainstitlemoviescount(List<String> list_title) {
 		int countcontainsanothermovietitle=0;
 		
@@ -97,6 +104,7 @@ public class GETMoviesApiHelper
 		return false;
 	}
 	
+	//verify word is plaindrome
 	public static boolean isPalindromewords(String str) {
 		String [] arrofwords=str.split(" ");
 		for (String words:arrofwords) {
@@ -110,6 +118,7 @@ public class GETMoviesApiHelper
 		return false;
 	}
 		
+	//sum of genre ids
 	public static int sumofgenre_ids(List<Integer> genre_ids) {
 		int sum = 0;
 		for(Integer d : genre_ids)
@@ -117,7 +126,7 @@ public class GETMoviesApiHelper
 		return sum;
 	}
     
-	
+	//verify sorting order
 	public static boolean verifysort(List<List<Integer>>list_genre_ids,List<Integer> ids) {
 		int countofnullgenreids=findnullgenreid(list_genre_ids);
 		
@@ -159,6 +168,7 @@ public class GETMoviesApiHelper
 			}
 	}
 	
+	//finding null genre ids first
 	public static int findnullgenreid(List<List<Integer>>list_genre_ids){
 		int countofemptygenreids=0;
 		for (List<Integer> elementlist : list_genre_ids) {
@@ -170,6 +180,7 @@ public class GETMoviesApiHelper
 		return countofemptygenreids;
 	}
 	
+	//verify null genre ids are first in the list and if so verify arranged by ascendin order of ids if more than 1
 	public static boolean verifynullgenreids(List<List<Integer>> nullgenreidlist,List<Integer> nullids) {
 		int i=0;
 		boolean flag=true;
@@ -198,6 +209,7 @@ public class GETMoviesApiHelper
 		
 	}
 	
+	//verify non null genre ids are order by ids in ascending order
 	public static boolean verifynotnullgenreids(List<Integer> notnullids) {
 		boolean resfornotnullgenreid=sortids(notnullids);
 		if(!resfornotnullgenreid) {
@@ -207,6 +219,7 @@ public class GETMoviesApiHelper
 		return true;
 	}
 	
+	//sorting function
 	public static boolean sortids(List<Integer>ids){
 		List<Integer> tmp = new ArrayList<Integer>(ids);
 		Collections.sort(tmp);
@@ -215,6 +228,7 @@ public class GETMoviesApiHelper
 		
 	}
 	
+	//verify an object is a string
 	public static boolean isString(List<Object> posterpath) {
 		for(Object listitem:posterpath) {
 			if (listitem==null) {
